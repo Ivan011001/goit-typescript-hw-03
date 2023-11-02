@@ -28,7 +28,10 @@ abstract class House {
 
   public comeIn(person: Person) {
     if (this.door) {
+      console.log("Adding new tenant");
       this.tenants.push(person);
+    } else {
+      console.log("The door is closed. Cannot add new tenant");
     }
   }
 
@@ -36,7 +39,7 @@ abstract class House {
     return this.tenants;
   }
 
-  public abstract openDoor(key: Key): boolean;
+  public abstract openDoor(key: Key): void;
   public abstract closeDoor(): void;
 }
 
@@ -48,15 +51,17 @@ class MyHouse extends House {
     this.key = key;
   }
 
-  public openDoor(personKey: Key): boolean {
+  public openDoor(personKey: Key): void {
     if (this.key.getSignature() === personKey.getSignature()) {
+      console.log("Opening the door");
       this.door = true;
-      return true;
+    } else {
+      console.log("Wrong key");
     }
-    return false;
   }
 
   public closeDoor(): void {
+    console.log("Closing the door");
     this.door = false;
   }
 }
